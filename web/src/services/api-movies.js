@@ -10,6 +10,7 @@ const getMoviesFromApi = () => {
     });
 };
 
+console.log(getMoviesFromApi);
 const objToExport = {
   getMoviesFromApi: getMoviesFromApi,
 };
