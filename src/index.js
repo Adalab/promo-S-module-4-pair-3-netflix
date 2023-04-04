@@ -47,7 +47,16 @@ mysql
 
 server.get("/movies", (req, res) => {
   console.log("Pidiendo a la base de datos información de los movies.");
-  let sql = "SELECT * FROM movies";
+  console.log(req.query.genre);
+  const genreFilterParam = req.query.genre;
+  console.log(genreFilterParam);
+  let sql;
+  if (genreFilterParam === "") {
+    sql = "SELECT * FROM movies";
+  } else {
+    sql = `SELECT * FROM movies WHERE genre LIKE "${genreFilterParam}"`;
+    console.log(sql);
+  }
   connection
     .query(sql)
     .then(([results, fields]) => {
