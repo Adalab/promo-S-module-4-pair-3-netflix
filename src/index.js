@@ -74,3 +74,8 @@ server.get("/movies", (req, res) => {
       throw err;
     });
 });
+
+const staticServerPathWeb = "./src/public-react";
+server.use(express.static(staticServerPathWeb));
+const staticServerPathImage = "./src/public-movies-images";
+server.use(express.static(staticServerPathImage));
