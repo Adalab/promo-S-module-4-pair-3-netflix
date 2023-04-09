@@ -75,6 +75,55 @@ server.get("/movies", (req, res) => {
     });
 });
 
+// ENDPOING LOGIN
+
+server.post("/login", (req, res) => {
+  const data = req.body;
+  console.log(data);
+  let sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+  let value = [req.body.email, req.body.password];
+  connection
+    .query(sql, value)
+    .then(([results, fields]) => {
+      console.log(results);
+      if (results.length === 1) {
+        res.json({
+          success: true,
+          userId: results[0].idUSers,
+        });
+      } else {
+        res.json({
+          success: false,
+          errorMessage: "Usuaria/o no encontrada/o",
+        });
+      }
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+// configurar motor de plantillas
+server.set("view engine", "ejs");
+
+// RUTAS DINÁMICAS
+
+server.get("/movie/:movieId", (req, res) => {
+  const moviesId = req.params.movieId;
+  const sql = "SELECT * FROM movies WHERE idmovies= ?";
+  connection
+    .query(sql, [moviesId])
+    .then(([results, fields]) => {
+      console.log(results);
+      res.render("movies_detail", results[0]);
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+// Rutas estáticas
+
 const staticServerPathWeb = "./src/public-react";
 server.use(express.static(staticServerPathWeb));
 const staticServerPathImage = "./src/public-movies-images";
