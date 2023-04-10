@@ -16,6 +16,9 @@ const serverPort = 4000;
 server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
+//fichero de conexión con mongoDB
+const dbConnect = require("../config/conexion");
+dbConnect();
 
 // conexión BD
 
@@ -128,3 +131,19 @@ const staticServerPathWeb = "./src/public-react";
 server.use(express.static(staticServerPathWeb));
 const staticServerPathImage = "./src/public-movies-images";
 server.use(express.static(staticServerPathImage));
+
+//ENDPOINT DE MANGODB
+const Movies = require("../models/movies");
+server.get("/movies_all_mongo", (req, res) => {
+  Movies.find({}).then((docs, err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(docs);
+      res.json({
+        success: true,
+        movies: docs,
+      });
+    }
+  });
+});
