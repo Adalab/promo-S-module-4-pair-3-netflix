@@ -135,15 +135,47 @@ server.use(express.static(staticServerPathImage));
 //ENDPOINT DE MANGODB
 const Movies = require("../models/movies");
 server.get("/movies_all_mongo", (req, res) => {
-  Movies.find({}).then((docs, err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(docs);
-      res.json({
-        success: true,
-        movies: docs,
-      });
-    }
-  });
+  let genreparams = req.query.genre;
+  if (genreparams === "") {
+    Movies.find({}).then((docs, err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(docs);
+        res.json({
+          success: true,
+          movies: docs,
+        });
+      }
+    });
+  } else {
+    Movies.find({ genre: genreparams }).then((docs, err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(docs);
+        res.json({
+          success: true,
+          movies: docs,
+        });
+      }
+    });
+  }
 });
+
+//ENDOPOINT FAVORITES
+const favorite = require("../models/Favorites");
+server.post("/favorites-add", (req, res) => {
+  let idMovie = ObjectId("64328d2f4081277ad2d7384e")
+  let idUser = ObjectId("64328eee4081277ad2d73851")
+  const favorite = new Favorites(
+     {
+     idUser: idMovie
+     idMovie: idUser
+     score: 10
+     }
+  );
+  favorite.save(function (err, doc) {
+  res.json(doc);
+  });
+  });
