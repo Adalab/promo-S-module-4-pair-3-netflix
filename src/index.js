@@ -78,7 +78,7 @@ server.get("/movies", (req, res) => {
     });
 });
 
-// ENDPOING LOGIN
+// ENDPOINT LOGIN
 
 server.post("/login", (req, res) => {
   const data = req.body;
