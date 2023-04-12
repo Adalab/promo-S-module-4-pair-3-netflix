@@ -164,18 +164,18 @@ server.get("/movies_all_mongo", (req, res) => {
 });
 
 //ENDOPOINT FAVORITES
-const favorite = require("../models/Favorites");
+const Favorites = require("../models/Favorites");
+const user = require("../models/users");
+
 server.post("/favorites-add", (req, res) => {
-  let idMovie = ObjectId("64328d2f4081277ad2d7384e")
-  let idUser = ObjectId("64328eee4081277ad2d73851")
-  const favorite = new Favorites(
-     {
-     idUser: idMovie
-     idMovie: idUser
-     score: 10
-     }
-  );
-  favorite.save(function (err, doc) {
-  res.json(doc);
+  let idMovie = "64328d2f4081277ad2d7384e";
+  let idUser = "64328eee4081277ad2d73851";
+  const favoriteObj = new Favorites({
+    idUser: idUser,
+    idMovie: idMovie,
+    score: 10,
   });
+  Favorites.create(favoriteObj).then((response) => {
+    res.json(response);
   });
+});

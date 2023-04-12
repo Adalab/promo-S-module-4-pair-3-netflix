@@ -68,7 +68,7 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 
 **4.10 Mongo III:**
 
-- [ ] 1. Insertar Películas favoritas
+- [x] 1. Insertar Películas favoritas
 - [ ] 3. Obtener Películas favoritas
 
 **4.11 Docker:**
